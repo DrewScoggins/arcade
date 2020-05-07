@@ -10,11 +10,8 @@ namespace Microsoft.DotNet.AzureDevOps.Build
 {
     public class GenerateAzureDevOpsBuildManifest : Microsoft.Build.Utilities.Task
     {
-        [Required]
         public string AzureDevOpsCollectionUri { get; set; }
-        [Required]
         public string AzureDevOpsProject { get; set; }
-        [Required]
         public int AzureDevOpsBuildId { get; set; }
         [Required]
         public string ManifestPath { get; set; }
@@ -27,8 +24,8 @@ namespace Microsoft.DotNet.AzureDevOps.Build
             ProjectRootElement project = ProjectRootElement.Create();
             var propertyGroup = project.CreatePropertyGroupElement();
             project.AppendChild(propertyGroup);
-            propertyGroup.AddProperty("AzureDevOpsCollectionUri", AzureDevOpsCollectionUri);
-            propertyGroup.AddProperty("AzureDevOpsProject", AzureDevOpsProject);
+            propertyGroup.AddProperty("AzureDevOpsCollectionUri", AzureDevOpsCollectionUri ?? "undefined");
+            propertyGroup.AddProperty("AzureDevOpsProject", AzureDevOpsProject ?? "undefined");
             propertyGroup.AddProperty("AzureDevOpsBuildId", AzureDevOpsBuildId.ToString());
             var itemGroup = project.CreateItemGroupElement();
             project.AppendChild(itemGroup);
@@ -43,17 +40,26 @@ namespace Microsoft.DotNet.AzureDevOps.Build
                     }
                 }
             }
-            foreach (var signInfo in StrongNameSignInfo)
+            if (StrongNameSignInfo != null)
             {
-                itemGroup.AddItem("StrongNameSignInfo", Path.GetFileName(signInfo.ItemSpec), signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                foreach (var signInfo in StrongNameSignInfo)
+                {
+                    itemGroup.AddItem("StrongNameSignInfo", Path.GetFileName(signInfo.ItemSpec), signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                }
             }
-            foreach (var signInfo in FileSignInfo)
+            if (FileSignInfo != null)
             {
-                itemGroup.AddItem("FileSignInfo", signInfo.ItemSpec, signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                foreach (var signInfo in FileSignInfo)
+                {
+                    itemGroup.AddItem("FileSignInfo", signInfo.ItemSpec, signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                }
             }
-            foreach (var signInfo in FileExtensionSignInfo)
+            if (FileExtensionSignInfo != null)
             {
-                itemGroup.AddItem("FileExtensionSignInfo", signInfo.ItemSpec, signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                foreach (var signInfo in FileExtensionSignInfo)
+                {
+                    itemGroup.AddItem("FileExtensionSignInfo", signInfo.ItemSpec, signInfo.CloneCustomMetadata() as Dictionary<string, string>);
+                }
             }
             project.Save(ManifestPath);
             return true;

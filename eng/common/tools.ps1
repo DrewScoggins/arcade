@@ -547,7 +547,7 @@ function InitializeToolset() {
 
   MSBuild-Core $proj $bl /t:__WriteToolsetLocation /clp:ErrorsOnly`;NoSummary /p:__ToolsetLocationOutputFile=$toolsetLocationFile
 
-  $path = Get-Content $toolsetLocationFile -TotalCount 1
+  $path = Get-Content $toolsetLocationFile -Encoding UTF8 -TotalCount 1
   if (!(Test-Path $path)) {
     throw "Invalid toolset path: $path"
   }
@@ -632,6 +632,8 @@ function MSBuild-Core() {
       $cmdArgs += " `"$arg`""
     }
   }
+
+  $env:ARCADE_BUILD_TOOL_COMMAND = "$($buildTool.Path) $cmdArgs"
 
   $exitCode = Exec-Process $buildTool.Path $cmdArgs
 

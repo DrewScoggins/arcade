@@ -9,7 +9,7 @@ Arcade is intended to provide well-understood and consistent mechanisms for cons
 Azure DevOps [![Build Status](https://dev.azure.com/dnceng/public/_apis/build/status/dotnet/arcade/arcade-ci)](https://dev.azure.com/dnceng/public/_build/latest?definitionId=208)
 
 ## Validation & Dependency Flow Status
-Status Last Updated: April 16, 2020, 8:30 AM PDT
+Status Last Updated: May 4, 2020, 4:00 PM PDT
 
 ### Current Version of Arcade in `.NET Eng - Latest`
 
@@ -21,10 +21,11 @@ Status Last Updated: April 16, 2020, 8:30 AM PDT
 
 ### Status of Latest Version of Arcade Being Validated
 
-- Could not validate against `dotnet/aspnetcore` at this time
-- Could not validate against `dotnet/runtime` at this time
+- Working on mitigating on-going errors with .NET Core version upgrade to 5.0. See https://github.com/dotnet/arcade/issues/5412
 
-[Result](https://dnceng.visualstudio.com/internal/_build/results?buildId=603007&view=results) of latest Arcade Validation run on April 15, 2020, 5:00 PM PDT
+[Result](https://dnceng.visualstudio.com/internal/_build/results?buildId=630001&view=results) of latest Arcade Validation run on May 4, 2020, 7:30 AM PDT
+
+[Result](https://dnceng.visualstudio.com/internal/_build/results?buildId=630755&view=results) of latest Arcade run on May 4, 2020, 2:55 PM PDT
 
 ## Getting Started
 
